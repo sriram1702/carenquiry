@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.mercedesbenz.carenquiry.CarenquiryApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-05-17T18:59:36" hostname="CGSCLXR80838529" time="0.004">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.mercedesbenz.carenquiry.CarenquiryApplicationTests" time="0.004"/>
+  <system-out><![CDATA[2023-05-18T00:29:34.806+05:30  INFO 22300 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.mercedesbenz.carenquiry.CarenquiryApplicationTests]: CarenquiryApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-05-18T00:29:34.810+05:30  INFO 22300 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.mercedesbenz.carenquiry.CarenquiryApplication for test class com.mercedesbenz.carenquiry.CarenquiryApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.6)
+
+2023-05-18T00:29:34.852+05:30  INFO 22300 --- [    Test worker] c.m.c.CarenquiryApplicationTests         : Starting CarenquiryApplicationTests using Java 17.0.6 with PID 22300 (started by SRHARIH in C:\Users\srharih\Downloads\springboot-gradle-personal-git\springboot-gradle)
+2023-05-18T00:29:34.853+05:30  INFO 22300 --- [    Test worker] c.m.c.CarenquiryApplicationTests         : No active profile set, falling back to 1 default profile: "default"
+2023-05-18T00:29:35.119+05:30  INFO 22300 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-18T00:29:35.131+05:30  INFO 22300 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 1 JPA repository interfaces.
+2023-05-18T00:29:35.231+05:30  INFO 22300 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-18T00:29:35.241+05:30  INFO 22300 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2023-05-18T00:29:35.321+05:30  INFO 22300 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@142dede5
+2023-05-18T00:29:35.322+05:30  INFO 22300 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2023-05-18T00:29:35.331+05:30  INFO 22300 --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-18T00:29:35.399+05:30  INFO 22300 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-18T00:29:35.399+05:30  INFO 22300 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-18T00:29:35.539+05:30  WARN 22300 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-05-18T00:29:35.609+05:30  INFO 22300 --- [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2023-05-18T00:29:36.623+05:30  INFO 22300 --- [    Test worker] c.m.c.CarenquiryApplicationTests         : Started CarenquiryApplicationTests in 1.805 seconds (process running for 14.848)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

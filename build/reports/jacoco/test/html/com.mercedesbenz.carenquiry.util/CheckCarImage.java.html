@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckCarImage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">carenquiry</a> &gt; <a href="index.source.html" class="el_package">com.mercedesbenz.carenquiry.util</a> &gt; <span class="el_source">CheckCarImage.java</span></div><h1>CheckCarImage.java</h1><pre class="source lang-java linenums">/**
+ * This package contains utility classes and methods that are used throughout the
+ * Mercedes-Benz Car Enquiry application. These classes and methods are not specific to
+ * any particular feature or module, but rather provide generic functionality that can be
+ * used across the application.
+ *
+ * &lt;p&gt;Some examples of utility classes in this package include {@link CheckCarImage},
+ * {@link CheckCarName}, and {@link CheckCarPrice}, which provide methods for checking
+ * the validity of car image URLs, car names, and car prices, respectively.
+ *
+ * &lt;p&gt;Other utility classes in this package include {@link DateUtils}, which provides
+ * methods for working with dates and times, and {@link StringUtils}, which provides
+ * methods for working with strings.
+ *
+ * @since 1.0
+ */
+/**
+ * This package contains utility classes and helper methods used by the Car Enquiry system.
+ */
+package com.mercedesbenz.carenquiry.util;
+
+
+/**
+ * This class is responsible for checking if a given car image URL is valid or not.
+ * It contains a single static method {@code ToCheckCarImage} that takes a car image URL
+ * as a string and returns a boolean value indicating whether the URL is valid or not.
+ *
+ * &lt;p&gt;The method returns {@code true} if the input string is not null, and {@code false} otherwise.
+ *
+ * &lt;p&gt;Example usage:
+ * &lt;pre&gt;{@code
+ *     String carImageUrl = &quot;https://www.example.com/images/cars/1.jpg&quot;;
+ *     boolean isValidImageUrl = CheckCarImage.ToCheckCarImage(carImageUrl);
+ * }&lt;/pre&gt;
+ *
+ * @since 1.0
+ */
+<span class="fc" id="L38">public class CheckCarImage {</span>
+
+    /**
+     * Checks if a given car image URL is valid or not.
+     *
+     * @param carimage the car image URL to check
+     * @return {@code true} if the input string is not null, {@code false} otherwise.
+     */
+    public static boolean ToCheckCarImage(String carimage){
+<span class="fc" id="L47">        boolean flag= false;</span>
+<span class="pc bpc" id="L48" title="1 of 4 branches missed.">        if(carimage!=null  &amp;&amp; !carimage.isEmpty()){</span>
+<span class="fc" id="L49">            flag=true;</span>
+        }
+<span class="fc" id="L51">        return flag;</span>
+    }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cars.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">carenquiry</a> &gt; <a href="index.source.html" class="el_package">com.mercedesbenz.carenquiry.model</a> &gt; <span class="el_source">Cars.java</span></div><h1>Cars.java</h1><pre class="source lang-java linenums">package com.mercedesbenz.carenquiry.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.web.WebProperties;
+
+import javax.annotation.processing.Generated;
+
+/**
+ * Represents a car with a name, image, and price.
+ *
+ * &lt;p&gt;
+ * This class represents a car with a name, image, and price. It is used to store and retrieve car information from a database.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;
+ * Example usage:
+ * &lt;/p&gt;
+ *
+ * &lt;pre&gt;{@code
+ * Cars car = new Cars(&quot;Mercedes-Benz C-Class&quot;, &quot;https://example.com/images/mercedes_c_class.jpg&quot;, 50000);
+ * car.setId(1);
+ * carRepository.save(car);
+ * }&lt;/pre&gt;
+ */
+@Entity
+@Table(name = &quot;car&quot;)
+public class Cars {
+
+
+    @Id
+//    @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  Integer id ;
+    @Column   @Value(&quot;string value&quot;)
+    private  String carname;
+    @Column  @Value(&quot;string value&quot;)
+    private  String carimage;
+    @Column
+    private  int carprice;
+    /**
+     * Constructs a new Cars instance with the specified name, image, and price.
+     *
+     * @param carname the name of the car
+     * @param carimage the URL of the car's image
+     * @param carprice the price of the car
+     */
+<span class="fc" id="L51">    public Cars(String carname, String carimage, int carprice) {</span>
+<span class="fc" id="L52">        this.carname = carname;</span>
+<span class="fc" id="L53">        this.carimage = carimage;</span>
+<span class="fc" id="L54">        this.carprice = carprice;</span>
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * Constructs a new Cars instance with the specified ID, name, image, and price.
+     * Note this constructor only for testing purposes
+     * @param id the ID of the car
+     * @param carname the name of the car
+     * @param carimage the URL of the car's image
+     * @param carprice the price of the car
+     */
+<span class="fc" id="L65">    public Cars(int id,String carname, String carimage, int carprice) {</span>
+<span class="fc" id="L66">        this.id = id;</span>
+<span class="fc" id="L67">        this.carname = carname;</span>
+<span class="fc" id="L68">        this.carimage = carimage;</span>
+<span class="fc" id="L69">        this.carprice = carprice;</span>
+<span class="fc" id="L70">    }</span>
+
+    /**
+     * This is a constructor
+     */
+<span class="fc" id="L75">    public  Cars(){</span>
+
+<span class="fc" id="L77">    }</span>
+    /**
+     * Returns the ID of the car.
+     *
+     * @return the ID of the car
+     */
+    public Integer getId() {
+<span class="fc" id="L84">        return id;</span>
+    }
+    /**
+     * Sets the ID of the car.
+     *
+     * @param id the ID of the car
+     */
+    public void setId(Integer id) {
+<span class="fc" id="L92">        this.id = id;</span>
+<span class="fc" id="L93">    }</span>
+    /**
+     * Returns the URL of the car's image.
+     *
+     * @return the URL of the car's image
+     */
+    public String getCarimage() {
+<span class="fc" id="L100">        return carimage;</span>
+    }
+    /**
+     * Sets the URL of the car's image.
+     *
+     * @param carimage the URL of the car's image
+     */
+    public void setCarimage(String carimage) {
+<span class="fc" id="L108">        this.carimage = carimage;</span>
+<span class="fc" id="L109">    }</span>
+    /**
+     * Returns the price of the car.
+     *
+     * @return the price of the car
+     */
+    public int getCarprice() {
+<span class="fc" id="L116">        return carprice;</span>
+    }
+    /**
+     * Sets the price of the car.
+     *
+     * @param carprice the price of the car
+     */
+    public void setCarprice(int carprice) {
+<span class="fc" id="L124">        this.carprice = carprice;</span>
+<span class="fc" id="L125">    }</span>
+    /**
+     * Returns the name of the car.
+     *
+     * @return the name of the car
+     */
+    public String getCarname() {
+<span class="fc" id="L132">        return carname;</span>
+    }
+    /**
+     * Sets the name of the car.
+     *
+     * @param carname the name of the car
+     */
+    public void setCarname(String carname) {
+<span class="fc" id="L140">        this.carname = carname;</span>
+<span class="fc" id="L141">    }</span>
+
+}
+
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

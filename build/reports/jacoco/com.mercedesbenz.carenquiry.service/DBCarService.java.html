@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DBCarService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">carenquiry</a> &gt; <a href="index.source.html" class="el_package">com.mercedesbenz.carenquiry.service</a> &gt; <span class="el_source">DBCarService.java</span></div><h1>DBCarService.java</h1><pre class="source lang-java linenums">package com.mercedesbenz.carenquiry.service;
+
+import com.mercedesbenz.carenquiry.exception.ProperCarDetails;
+import com.mercedesbenz.carenquiry.model.Cars;
+import com.mercedesbenz.carenquiry.repository.CarRepository;
+import com.mercedesbenz.carenquiry.util.CheckCarImage;
+import com.mercedesbenz.carenquiry.util.CheckCarName;
+import com.mercedesbenz.carenquiry.util.CheckCarPrice;
+import jakarta.validation.Valid;
+import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpInputMessage;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@Primary
+<span class="fc" id="L26">public class DBCarService {</span>
+
+    @Autowired
+    CarRepository carRepository;
+
+    /**
+     *
+     * @param carRepository
+     * Creating a respository named carRepository
+
+     */
+//    public  DBCarService(CarRepository carRepository){
+//    this.carRepository=carRepository;
+//}
+
+    /**
+     * @param cars
+     * @return cars created 201 code
+     * create car method is used to create car info in the db
+     *  this method is  used to create a car detail with carname,carimage and carprice
+     */
+
+
+    public ResponseEntity&lt;Cars&gt; Createcar(@RequestBody Cars cars) {
+<span class="fc" id="L50">        boolean carprice = CheckCarPrice.ToCheckCarPrice(cars.getCarprice());</span>
+<span class="fc" id="L51">        boolean carimage = CheckCarImage.ToCheckCarImage(cars.getCarimage());</span>
+<span class="fc" id="L52">        boolean carname = CheckCarName.ToCheckCarName(cars.getCarname());</span>
+<span class="fc" id="L53">        ArrayList&lt;String&gt; errordetails = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L54">        boolean errorflag = false;</span>
+<span class="fc" id="L55">        StringBuilder errormessage = new StringBuilder(&quot;please enter the following details correctly\n&quot;);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (!carprice) {</span>
+<span class="fc" id="L57">            errorflag = true;</span>
+<span class="fc" id="L58">            errormessage.append(&quot;car price\n&quot;);</span>
+//            errordetails.add(&quot;Car Price&quot;);
+        }
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (!carname) {</span>
+<span class="fc" id="L62">            errorflag = true;</span>
+<span class="fc" id="L63">            errormessage.append(&quot;car name\n&quot;);</span>
+//            errordetails.add(&quot;Car name&quot;);
+        }
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (!carimage) {</span>
+<span class="fc" id="L67">            errorflag = true;</span>
+<span class="fc" id="L68">            errormessage.append(&quot;car image\n&quot;);</span>
+//            errordetails.add(&quot;Car image&quot;);
+        }
+
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (errorflag == true) {</span>
+
+<span class="fc" id="L74">            String message = String.valueOf(new ProperCarDetails(errormessage.toString()).getMessage());</span>
+
+<span class="fc" id="L76">            return new ResponseEntity(message, HttpStatus.CONFLICT);</span>
+        }
+//        try {
+<span class="fc" id="L79">        Cars savecars = carRepository.save(cars);</span>
+
+<span class="fc" id="L81">        return new ResponseEntity&lt;Cars&gt;(savecars, HttpStatus.CREATED);</span>
+//        } catch (Exception e) {
+//            System.out.println(e);
+//            return new ResponseEntity(&quot;Some error occurred&quot;, HttpStatus.NOT_FOUND);
+//        }
+
+
+    }
+
+
+    /**
+     * @param id
+     * @return to find particular car info by giving id as param
+     */
+    public ResponseEntity&lt;Cars&gt; FindbyId(int id) {
+<span class="fc" id="L96">        Optional&lt;Cars&gt; car = carRepository.findById(id);</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">        if (car.isPresent()) {</span>
+<span class="nc" id="L98">            return new ResponseEntity&lt;&gt;(car.get(), HttpStatus.FOUND);</span>
+        } else {
+<span class="fc" id="L100">            return new ResponseEntity (&quot;Id not found in the database&quot;, HttpStatus.NOT_FOUND);</span>
+
+        }
+    }
+
+
+
+
+
+
+
+    /**
+     * @return all  cars from the db
+     */
+    public ResponseEntity&lt;List&lt;Cars&gt;&gt; GetAllCars() {
+<span class="fc" id="L115">        List&lt;Cars&gt; getallcars = carRepository.findAll();</span>
+<span class="fc" id="L116">        return new ResponseEntity&lt;List&lt;Cars&gt;&gt;(getallcars, HttpStatus.OK);</span>
+    }
+
+
+    /**
+     * @param id
+     * @return the car details will get updated
+     */
+    public ResponseEntity&lt;Cars&gt; UpdateCar(@Valid @NonNull @RequestBody Cars cars, int id) {
+<span class="fc" id="L125">        boolean carprice = CheckCarPrice.ToCheckCarPrice(cars.getCarprice());</span>
+<span class="fc" id="L126">        boolean carimage = CheckCarImage.ToCheckCarImage(cars.getCarimage());</span>
+<span class="fc" id="L127">        boolean carname = CheckCarName.ToCheckCarName(cars.getCarname());</span>
+<span class="fc" id="L128">        ArrayList&lt;String&gt; errordetails = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L129">        boolean errorflag = false;</span>
+<span class="fc" id="L130">        StringBuilder errormessage = new StringBuilder(&quot;please enter the following details correctly\n&quot;);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        if (!carprice) {</span>
+<span class="fc" id="L132">            errorflag = true;</span>
+<span class="fc" id="L133">            errormessage.append(&quot;car price\n&quot;);</span>
+//            errordetails.add(&quot;Car Price&quot;);
+        }
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (!carname) {</span>
+<span class="fc" id="L137">            errorflag = true;</span>
+<span class="fc" id="L138">            errormessage.append(&quot;car name\n&quot;);</span>
+//            errordetails.add(&quot;Car name&quot;);
+        }
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        if (!carimage) {</span>
+<span class="fc" id="L142">            errorflag = true;</span>
+<span class="fc" id="L143">            errormessage.append(&quot;car image\n&quot;);</span>
+//            errordetails.add(&quot;Car image&quot;);
+        }
+
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (errorflag == true) {</span>
+
+<span class="fc" id="L149">            String message = String.valueOf(new ProperCarDetails(errormessage.toString()).getMessage());</span>
+
+<span class="fc" id="L151">            return new ResponseEntity(message, HttpStatus.CONFLICT);</span>
+        }
+        try {
+<span class="fc" id="L154">            carRepository.existsById(id);</span>
+
+<span class="fc" id="L156">            Cars updatecar = carRepository.findById(id).get();</span>
+<span class="fc" id="L157">            updatecar.setCarname(cars.getCarname());</span>
+<span class="fc" id="L158">            updatecar.setCarimage(cars.getCarimage());</span>
+<span class="fc" id="L159">            updatecar.setCarprice(cars.getCarprice());</span>
+<span class="fc" id="L160">            carRepository.save(updatecar);</span>
+
+<span class="fc" id="L162">            return new ResponseEntity&lt;Cars&gt;(updatecar, HttpStatus.OK);</span>
+<span class="nc" id="L163">        } catch (Exception e){</span>
+<span class="nc" id="L164">            return new ResponseEntity(&quot;Some error occurred&quot;, HttpStatus.NOT_FOUND);</span>
+        }
+
+    }
+
+    /**
+     * @param id this method used to delete the car info by taking id as param
+     */
+    public  ResponseEntity&lt;String&gt;  deleteCar(int id){
+
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">        if(carRepository.existsById(id)){</span>
+
+<span class="nc" id="L176">            carRepository.deleteById(id);</span>
+<span class="nc" id="L177">            return new ResponseEntity(&quot;Deleted&quot;,HttpStatus.OK);</span>
+        }
+        else {
+
+
+<span class="fc" id="L182">            return new ResponseEntity(&quot;Car Not found&quot;, HttpStatus.NOT_FOUND);</span>
+        }
+    }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
