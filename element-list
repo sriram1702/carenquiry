@@ -1,0 +1,8 @@
+com.mercedesbenz.carenquiry
+com.mercedesbenz.carenquiry.controller
+com.mercedesbenz.carenquiry.exception
+com.mercedesbenz.carenquiry.model
+com.mercedesbenz.carenquiry.repository
+com.mercedesbenz.carenquiry.service
+com.mercedesbenz.carenquiry.swaggerconfig
+com.mercedesbenz.carenquiry.util
