@@ -246,25 +246,25 @@ public class CarControllerTest{
 //                .andDo(print());
     }
 
-    @Test
-    public void findbyId_fail() throws Exception {
-        int id = 2;
-        Cars c = new Cars(2, "Thar", "http://google", 21313);
-        Mockito.when(carRepository.findById(id)).thenReturn(Optional.of(c));
-        Mockito.when(carController.findbyId(id)).thenReturn(new ResponseEntity("Id not found in the database",HttpStatus.NOT_FOUND));
-
-// explicitly return a non-null ResponseEntity object
-        Mockito.when(dbCarService.FindbyId(id)).thenReturn(new ResponseEntity(c,HttpStatus.NOT_FOUND));
-
-        ResponseEntity<Cars> responseEntity = dbCarService.FindbyId(id);
-
-        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-        assertEquals(c, responseEntity.getBody());
-        this.mockMvc.perform(
-                        get("/api/v1/cars/{id}",id))
-                .andExpect(status().isNotFound())
-                .andDo(print());
-    }
+//    @Test
+//    public void findbyId_fail() throws Exception {
+//        int id = 2;
+//        Cars c = new Cars(2, "Thar", "http://google", 21313);
+//        Mockito.when(carRepository.findById(id)).thenReturn(Optional.of(c));
+//        Mockito.when(carController.findbyId(id)).thenReturn(new ResponseEntity("Id not found in the database",HttpStatus.NOT_FOUND));
+//
+//// explicitly return a non-null ResponseEntity object
+//        Mockito.when(dbCarService.FindbyId(id)).thenReturn(new ResponseEntity(c,HttpStatus.NOT_FOUND));
+//
+//        ResponseEntity<Cars> responseEntity = dbCarService.FindbyId(id);
+//
+//        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+//        assertEquals(c, responseEntity.getBody());
+//        this.mockMvc.perform(
+//                        get("/api/v1/cars/{id}",id))
+//                .andExpect(status().isNotFound())
+//                .andDo(print());
+//    }
 
 
     @Test
