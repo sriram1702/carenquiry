@@ -1,167 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CarController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">carenquiry</a> &gt; <a href="index.source.html" class="el_package">com.mercedesbenz.carenquiry.controller</a> &gt; <span class="el_source">CarController.java</span></div><h1>CarController.java</h1><pre class="source lang-java linenums">//package com.mercedesbenz.carenquiry.controller;
-//
-//import com.mercedesbenz.carenquiry.service.DBCarService;
-//import com.mercedesbenz.carenquiry.model.Cars;
-//import com.mercedesbenz.carenquiry.repository.CarRepository;
-////import io.swagger.annotations.Api;
-//
-//
-//import io.swagger.v3.oas.annotations.Operation;
-//import io.swagger.v3.oas.annotations.responses.ApiResponse;
-//import io.swagger.v3.oas.annotations.tags.Tag;
-//import jakarta.validation.Valid;
-//import io.swagger.v3.oas.annotations.info.Contact;
-//
-//import  io.swagger.v3.oas.annotations.OpenAPIDefinition;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Qualifier;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.lang.NonNull;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.List;
-//
-//@RestController
-///**
-// * so our endpoint here is &quot;http://localhost:8085/api/v1/cars&quot;
-// */
-//@RequestMapping(&quot;/api/v1/cars&quot;)
-//@Tag(name = &quot;Car Enquiry&quot;)
-//@CrossOrigin(&quot;http://localhost:3000&quot;)
-//
-//public class CarController {
-//    /**
-//     * This CarController has every REST API mappings
-//     */
-//    private  final DBCarService DBCarService;
-//
-//    @Autowired
-//    private CarRepository carRepository;
-//
-//
-//    public CarController(DBCarService DBCarService) {
-//        this.DBCarService = DBCarService;
-//    }
-//
-//    /**
-//     *
-//     * @param cars
-//     * @return to create a post method we are using a endpoint known as &quot;createcar&quot;
-//     */
-//    @Operation(
-//            description =&quot;To create a car information please give carname ,carimage and carprice&quot;,
-//            summary = &quot;This is a endpoint to create a car info&quot;,
-//            responses = {
-//                    @ApiResponse(
-//                            description = &quot;Car Details Added Successfully&quot;,
-//                            responseCode = &quot;201&quot;
-//
-//                    )
-//            }
-//
-//    )
-//    @PostMapping(&quot;/createcar&quot;)
-//    public  ResponseEntity&lt;Cars&gt;Createcar( @Valid @NonNull @RequestBody Cars cars) {
-//
-//        ResponseEntity&lt;Cars&gt; response = DBCarService.Createcar(cars);
-//        return response;
-//    }
-//
-//    /**
-//     *
-//     * @param id
-//     * @return to get the unique car detail by id
-//     */
-//    @Operation(
-//            description =&quot;To get a particular car information by id&quot;,
-//            summary = &quot;This is a endpoint to get a particular car info by id&quot;,
-//            responses = {
-//                    @ApiResponse(
-//                            description = &quot;Car Detail of a particular id is fetched successfully&quot;,
-//                            responseCode = &quot;200&quot;
-//
-//                    )
-//            }
-//
-//    )
-//    @GetMapping(&quot;/{id}&quot;)
-//    public ResponseEntity&lt;Cars&gt; findbyId(
-//            @PathVariable(&quot;id&quot;) int id) {
-//        return DBCarService.FindbyId(id);
-//    }
-//
-//    /**
-//     *
-//     * @param id
-//     * @return to update the car details using the id as a param
-//     */
-//    @Operation(
-//            description =&quot;To Update a car info like carname ,carimage and carprice&quot;,
-//            summary = &quot;This is a endpoint to update a  car info by id&quot;,
-//            responses = {
-//                    @ApiResponse(
-//                            description = &quot;Car Detail of a particular id is updated successfully&quot;,
-//                            responseCode = &quot;200&quot;
-//
-//                    )
-//            }
-//
-//    )
-//    @PutMapping(&quot;/{id}&quot;)
-//    public ResponseEntity&lt;Cars&gt; updateCarById(
-//            @PathVariable(&quot;id&quot;) int id, @RequestBody Cars cars) {
-//        return DBCarService.UpdateCar(cars,id);
-//    }
-//
-//    /**
-//     *
-//     *  to get the details of the all cars
-//     */
-//    @Operation(
-//            description =&quot;To get all cars information&quot;,
-//            summary = &quot;This is a endpoint to get all cars info&quot;,
-//            responses = {
-//                    @ApiResponse(
-//                            description = &quot;Car Detail of all id is fetched successfully&quot;,
-//                            responseCode = &quot;200&quot;
-//
-//                    )
-//            }
-//
-//    )
-//    @GetMapping
-//    public ResponseEntity&lt;List&lt;Cars&gt;&gt; findAllCars() {
-//        return DBCarService.GetAllCars();
-//    }
-//
-//    /**
-//     *
-//     * @param id
-//     * @return to delete a particular car by its id as param
-//     */
-//
-//    @Operation(
-//            description =&quot;To delete  a particular car information by id&quot;,
-//            summary = &quot;This is a endpoint to delete a particular car info by id&quot;,
-//            responses = {
-//                    @ApiResponse(
-//                            description = &quot;Car Detail of a particular id is deleted successfully&quot;,
-//                            responseCode = &quot;200&quot;
-//
-//                    )
-//            }
-//
-//    )
-//    @DeleteMapping(&quot;/{id}&quot;)
-//    public ResponseEntity&lt;String&gt;  deleteCar( @PathVariable (&quot;id&quot;) int id){
-//        ResponseEntity&lt;String&gt; response = DBCarService.deleteCar(id);
-//        return response;
-//    }}
-//
-//
-//
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CarController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">carenquiry</a> &gt; <a href="index.source.html" class="el_package">com.mercedesbenz.carenquiry.controller</a> &gt; <span class="el_source">CarController.java</span></div><h1>CarController.java</h1><pre class="source lang-java linenums">
 
 
 package com.mercedesbenz.carenquiry.controller;
@@ -173,24 +10,23 @@ import com.mercedesbenz.carenquiry.service.DBCarService;
 import com.mercedesbenz.carenquiry.model.Cars;
 import com.mercedesbenz.carenquiry.repository.CarRepository;
 //import io.swagger.annotations.Api;
+import com.microsoft.azure.functions.HttpRequestMessage;
 
+import com.microsoft.azure.functions.annotation.*;
+import com.microsoft.azure.functions.*;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import io.swagger.v3.oas.annotations.info.Contact;
-
-import  io.swagger.v3.oas.annotations.OpenAPIDefinition;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 /**
  * This CarController has every REST API mappings
  */
@@ -222,9 +58,9 @@ public class CarController {
      * @param DBCarService this is used to use the services provided by dbcarservice in carcontroller
      */
 
-<span class="fc" id="L225">    public CarController(DBCarService DBCarService) {</span>
-<span class="fc" id="L226">        this.DBCarService = DBCarService;</span>
-<span class="fc" id="L227">    }</span>
+<span class="fc" id="L61">    public CarController(DBCarService DBCarService) {</span>
+<span class="fc" id="L62">        this.DBCarService = DBCarService;</span>
+<span class="fc" id="L63">    }</span>
 
 //    /**
 //     * Returns The car information with carname,carimage and carprice
@@ -236,7 +72,7 @@ public class CarController {
     /**
      * Creates a new car in the database.
      *
-     * @param cars the car object to create
+//     * @param  context
 
      * @return a ResponseEntity containing the created car and a status code indicating success or failure
      *
@@ -270,16 +106,32 @@ public class CarController {
 
     )
     @PostMapping(&quot;/createcar&quot;)
-    public  ResponseEntity&lt;Cars&gt;Createcar( @Valid @NonNull @RequestBody Cars cars) {
+    public  ResponseEntity&lt;Cars&gt;Createcar( @NonNull @RequestBody Cars cars) {
 
-<span class="fc" id="L275">        ResponseEntity&lt;Cars&gt; response = DBCarService.Createcar(cars);</span>
-<span class="fc" id="L276">        return response;</span>
+<span class="fc" id="L111">        ResponseEntity&lt;Cars&gt; response = DBCarService.Createcar(cars);</span>
+<span class="fc" id="L112">        return response;</span>
     }
+    //AZURE FUNCTION
+//    @FunctionName(&quot;CreateCarFunction&quot;)
+//    public HttpResponseMessage tocreatecar(
+//            @HttpTrigger(name = &quot;req&quot;, methods = { HttpMethod.POST }, route = &quot;createcar&quot;) HttpRequestMessage&lt;Optional&lt;String&gt;&gt; request,
+//            final ExecutionContext context) {
+//
+//
+//        Optional&lt;String&gt; cars=request.getBody();
+//        ResponseEntity&lt;Cars&gt; response=DBCarService.Createcar(cars);
+////        ResponseEntity&lt;Cars&gt; response = DBCarService.Createcar(cars);
+//
+//        // Create an HTTP response based on the ResponseEntity
+//        return request.createResponseBuilder(HttpStatus.CREATED)
+//                .body(response.getBody())
+//                .build();
+//    }
 
     /**
      * Retrieves a car by its ID.
      *
-     * @param id the ID of the car to retrieve
+//     * @param id the ID of the car to retrieve
      * @return a ResponseEntity containing the car and a status code indicating success or failure
      *
      * &lt;p&gt;
@@ -316,8 +168,23 @@ public class CarController {
     public ResponseEntity&lt;Cars&gt; findbyId(
             @PathVariable(&quot;id&quot;) int id) {
 
-<span class="fc" id="L319">        return DBCarService.FindbyId(id);</span>
+<span class="fc" id="L171">        return DBCarService.FindbyId(id);</span>
     }
+
+    //AZURE FUNCTIONS
+//    @FunctionName(&quot;FindAllCarsFunction&quot;)
+//    public HttpResponseMessage getbycarid(
+//            @HttpTrigger(name = &quot;req&quot;, methods = { HttpMethod.GET }, route = &quot;cars&quot;) HttpRequestMessage&lt;Optional&lt;String&gt;&gt; request,
+//            final ExecutionContext context) {
+//
+//        // Call the DBCarService.GetAllCars method
+//        ResponseEntity&lt;List&lt;Cars&gt;&gt; response = DBCarService.GetAllCars();
+//
+//        // Create an HTTP response based on the ResponseEntity
+//        return request.createResponseBuilder(HttpStatus.OK)
+//                .body(response.getBody())
+//                .build();
+//    }
 
     /**
      * Updates an existing car in the database.
@@ -357,8 +224,27 @@ public class CarController {
     @PutMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Cars&gt; updateCarById(
             @PathVariable(&quot;id&quot;) int id, @RequestBody Cars cars) {
-<span class="fc" id="L360">        return DBCarService.UpdateCar(cars,id);</span>
+<span class="fc" id="L227">        return DBCarService.UpdateCar(cars,id);</span>
     }
+    //AZURE FUNCTIONS
+//    @FunctionName(&quot;UpdateCarByIdFunction&quot;)
+//    public HttpResponseMessage updatecar(
+//            @HttpTrigger(name = &quot;req&quot;, methods = { HttpMethod.PUT }, route = &quot;cars/{id}&quot;) HttpRequestMessage&lt;Cars&gt; request,
+//            @BindingName(&quot;id&quot;) int id,
+//            final ExecutionContext context) {
+//
+//        // Retrieve the Cars object from the request body
+//        Cars cars = request.getBody();
+//
+//        // Call the DBCarService.UpdateCar method
+//        ResponseEntity&lt;Cars&gt; response = DBCarService.UpdateCar(cars, id);
+//
+//        // Create an HTTP response based on the ResponseEntity
+//        return request.createResponseBuilder(HttpStatus.OK)
+//                .body(response.getBody())
+//                .build();
+//    }
+
     /**
      * Retrieves a list of all cars from the database.
      *
@@ -394,8 +280,23 @@ public class CarController {
     )
     @GetMapping
     public ResponseEntity&lt;List&lt;Cars&gt;&gt; findAllCars() {
-<span class="fc" id="L397">        return DBCarService.GetAllCars();</span>
+<span class="fc" id="L283">        return DBCarService.GetAllCars();</span>
     }
+
+//    //AZURE FUNCTIONS
+//    @FunctionName(&quot;FindAllCarsFunction&quot;)
+//    public HttpResponseMessage getallcar(
+//            @HttpTrigger(name = &quot;req&quot;, methods = { HttpMethod.GET }, route = &quot;cars&quot;) HttpRequestMessage&lt;Optional&lt;String&gt;&gt; request,
+//            final ExecutionContext context) {
+//
+//        // Call the DBCarService.GetAllCars method
+//        ResponseEntity&lt;List&lt;Cars&gt;&gt; response = DBCarService.GetAllCars();
+//
+//        // Create an HTTP response based on the ResponseEntity
+//        return request.createResponseBuilder(HttpStatus.OK)
+//                .body(response.getBody())
+//                .build();
+//    }
 
     /**
      * Deletes a car from the database by its ID.
@@ -433,9 +334,29 @@ public class CarController {
     )
     @DeleteMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;String&gt;  deleteCar( @PathVariable (&quot;id&quot;) int id){
-<span class="fc" id="L436">        ResponseEntity&lt;String&gt; response = DBCarService.deleteCar(id);</span>
-<span class="fc" id="L437">        return response;</span>
+<span class="fc" id="L337">        ResponseEntity&lt;String&gt; response = DBCarService.deleteCar(id);</span>
+<span class="fc" id="L338">        return response;</span>
     }
+
+    //AZURE FUNCTIONS
+//    @FunctionName(&quot;DeleteCarFunction&quot;)
+//    public HttpResponseMessage deletecar(
+//            @HttpTrigger(name = &quot;req&quot;, methods = { HttpMethod.DELETE }, route = &quot;cars/{id}&quot;) HttpRequestMessage&lt;Optional&lt;String&gt;&gt; request,
+//            @BindingName(&quot;id&quot;) int id,
+//            final ExecutionContext context) {
+//
+//        // Call the DBCarService.deleteCar method
+//        ResponseEntity&lt;String&gt; response = DBCarService.deleteCar(id);
+//
+//        // Create an HTTP response based on the ResponseEntity
+//        return request.createResponseBuilder(HttpStatus.OK)
+//                .body(response.getBody())
+//                .build();
+//    }
+
+
+
+
 }
 
 

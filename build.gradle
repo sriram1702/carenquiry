@@ -5,6 +5,7 @@ plugins {
 	id 'jacoco'
 
 
+
 }
 archivesBaseName = 'car-enquiry'
 
@@ -47,7 +48,7 @@ jacocoTestCoverageVerification {
 	violationRules {
 		rule {
 			limit {
-				minimum = 0.75
+				minimum = 0.92
 			}
 		}
 	}
@@ -66,6 +67,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-tomcat'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.microsoft.azure.functions:azure-functions-java-library:1.4.0'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+
+
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'org.jacoco:org.jacoco.core:0.8.8'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

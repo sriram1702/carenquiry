@@ -197,10 +197,8 @@ import com.mercedesbenz.carenquiry.util.CheckCarImage;
 import com.mercedesbenz.carenquiry.util.CheckCarName;
 import com.mercedesbenz.carenquiry.util.CheckCarPrice;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -217,7 +215,7 @@ import java.util.Optional;
 @Service
 @Primary
 
-<span class="fc" id="L220">public class DBCarService {</span>
+<span class="fc" id="L218">public class DBCarService {</span>
     /**
 
      This class provides a service layer for the CarRepository class to perform various operations related to the Cars entity.
@@ -242,38 +240,38 @@ import java.util.Optional;
      */
 
     public ResponseEntity&lt;Cars&gt; Createcar(@RequestBody Cars cars) {
-<span class="fc" id="L245">        boolean carprice = CheckCarPrice.ToCheckCarPrice(cars.getCarprice());</span>
-<span class="fc" id="L246">        boolean carimage = CheckCarImage.ToCheckCarImage(cars.getCarimage());</span>
-<span class="fc" id="L247">        boolean carname = CheckCarName.ToCheckCarName(cars.getCarname());</span>
-<span class="fc" id="L248">        ArrayList&lt;String&gt; errordetails = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L249">        boolean errorflag = false;</span>
-<span class="fc" id="L250">        StringBuilder errormessage = new StringBuilder(&quot;please enter the following details correctly\n&quot;);</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">        if (!carprice) {</span>
-<span class="fc" id="L252">            errorflag = true;</span>
-<span class="fc" id="L253">            errormessage.append(&quot;car price\n&quot;);</span>
+<span class="fc" id="L243">        boolean carprice = CheckCarPrice.ToCheckCarPrice(cars.getCarprice());</span>
+<span class="fc" id="L244">        boolean carimage = CheckCarImage.ToCheckCarImage(cars.getCarimage());</span>
+<span class="fc" id="L245">        boolean carname = CheckCarName.ToCheckCarName(cars.getCarname());</span>
+<span class="fc" id="L246">        ArrayList&lt;String&gt; errordetails = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L247">        boolean errorflag = false;</span>
+<span class="fc" id="L248">        StringBuilder errormessage = new StringBuilder(&quot;please enter the following details correctly\n&quot;);</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        if (!carprice) {</span>
+<span class="fc" id="L250">            errorflag = true;</span>
+<span class="fc" id="L251">            errormessage.append(&quot;car price\n&quot;);</span>
 //            errordetails.add(&quot;Car Price&quot;);
         }
-<span class="fc bfc" id="L256" title="All 2 branches covered.">        if (!carname) {</span>
-<span class="fc" id="L257">            errorflag = true;</span>
-<span class="fc" id="L258">            errormessage.append(&quot;car name\n&quot;);</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">        if (!carname) {</span>
+<span class="fc" id="L255">            errorflag = true;</span>
+<span class="fc" id="L256">            errormessage.append(&quot;car name\n&quot;);</span>
 //            errordetails.add(&quot;Car name&quot;);
         }
-<span class="fc bfc" id="L261" title="All 2 branches covered.">        if (!carimage) {</span>
-<span class="fc" id="L262">            errorflag = true;</span>
-<span class="fc" id="L263">            errormessage.append(&quot;car image\n&quot;);</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">        if (!carimage) {</span>
+<span class="fc" id="L260">            errorflag = true;</span>
+<span class="fc" id="L261">            errormessage.append(&quot;car image\n&quot;);</span>
 //            errordetails.add(&quot;Car image&quot;);
         }
 
-<span class="pc bpc" id="L267" title="1 of 2 branches missed.">        if (errorflag == true) {</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">        if (errorflag == true) {</span>
 
-<span class="fc" id="L269">            String message = String.valueOf(new ProperCarDetails(errormessage.toString()).getMessage());</span>
+<span class="fc" id="L267">            String message = String.valueOf(new ProperCarDetails(errormessage.toString()).getMessage());</span>
 
-<span class="fc" id="L271">            return new ResponseEntity(message, HttpStatus.CONFLICT);</span>
+<span class="fc" id="L269">            return new ResponseEntity(message, HttpStatus.CONFLICT);</span>
         }
 //        try {
-<span class="nc" id="L274">        Cars savecars = carRepository.save(cars);</span>
+<span class="fc" id="L272">        Cars savecars = carRepository.save(cars);</span>
 
-<span class="nc" id="L276">        return new ResponseEntity&lt;Cars&gt;(savecars, HttpStatus.CREATED);</span>
+<span class="fc" id="L274">        return new ResponseEntity&lt;Cars&gt;(savecars, HttpStatus.CREATED);</span>
 //        } catch (Exception e) {
 //            System.out.println(e);
 //            return new ResponseEntity(&quot;Some error occurred&quot;, HttpStatus.NOT_FOUND);
@@ -292,12 +290,12 @@ import java.util.Optional;
      */
 
     public ResponseEntity&lt;Cars&gt; FindbyId(int id) {
-<span class="pc bpc" id="L295" title="1 of 2 branches missed.">        if (carRepository.existsById(id)) {</span>
-<span class="nc" id="L296">            Cars car = carRepository.findById(id).get();</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">        if (carRepository.existsById(id)) {</span>
+<span class="fc" id="L294">            Cars car = carRepository.findById(id).get();</span>
 
-<span class="nc" id="L298">            return new ResponseEntity&lt;Cars&gt;(car, HttpStatus.FOUND);</span>
+<span class="fc" id="L296">            return new ResponseEntity&lt;Cars&gt;(car, HttpStatus.OK);</span>
         } else {
-<span class="fc" id="L300">            return new ResponseEntity (&quot;Id not found in the database&quot;, HttpStatus.NOT_FOUND);</span>
+<span class="fc" id="L298">            return new ResponseEntity (&quot;Id not found in the database&quot;, HttpStatus.NOT_FOUND);</span>
 
         }
 
@@ -321,8 +319,8 @@ import java.util.Optional;
 
 
     public ResponseEntity&lt;List&lt;Cars&gt;&gt; GetAllCars() {
-<span class="fc" id="L324">        List&lt;Cars&gt; getallcars = carRepository.findAll();</span>
-<span class="fc" id="L325">        return new ResponseEntity&lt;List&lt;Cars&gt;&gt;(getallcars, HttpStatus.OK);</span>
+<span class="fc" id="L322">        List&lt;Cars&gt; getallcars = carRepository.findAll();</span>
+<span class="fc" id="L323">        return new ResponseEntity&lt;List&lt;Cars&gt;&gt;(getallcars, HttpStatus.OK);</span>
     }
 
 
@@ -337,46 +335,46 @@ import java.util.Optional;
      * @return          a response entity with the updated car object and HTTP status OK, or an error message and HTTP status NOT_FOUND or CONFLICT
      */
     public ResponseEntity&lt;Cars&gt; UpdateCar(@Valid @NonNull @RequestBody Cars cars, int id) {
-<span class="fc" id="L340">        boolean carprice = CheckCarPrice.ToCheckCarPrice(cars.getCarprice());</span>
-<span class="fc" id="L341">        boolean carimage = CheckCarImage.ToCheckCarImage(cars.getCarimage());</span>
-<span class="fc" id="L342">        boolean carname = CheckCarName.ToCheckCarName(cars.getCarname());</span>
-<span class="fc" id="L343">        ArrayList&lt;String&gt; errordetails = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L344">        boolean errorflag = false;</span>
-<span class="fc" id="L345">        StringBuilder errormessage = new StringBuilder(&quot;please enter the following details correctly\n&quot;);</span>
-<span class="fc bfc" id="L346" title="All 2 branches covered.">        if (!carprice) {</span>
-<span class="fc" id="L347">            errorflag = true;</span>
-<span class="fc" id="L348">            errormessage.append(&quot;car price\n&quot;);</span>
+<span class="fc" id="L338">        boolean carprice = CheckCarPrice.ToCheckCarPrice(cars.getCarprice());</span>
+<span class="fc" id="L339">        boolean carimage = CheckCarImage.ToCheckCarImage(cars.getCarimage());</span>
+<span class="fc" id="L340">        boolean carname = CheckCarName.ToCheckCarName(cars.getCarname());</span>
+<span class="fc" id="L341">        ArrayList&lt;String&gt; errordetails = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L342">        boolean errorflag = false;</span>
+<span class="fc" id="L343">        StringBuilder errormessage = new StringBuilder(&quot;please enter the following details correctly\n&quot;);</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">        if (!carprice) {</span>
+<span class="fc" id="L345">            errorflag = true;</span>
+<span class="fc" id="L346">            errormessage.append(&quot;car price\n&quot;);</span>
 // errordetails.add(&quot;Car Price&quot;);
         }
-<span class="fc bfc" id="L351" title="All 2 branches covered.">        if (!carname) {</span>
-<span class="fc" id="L352">            errorflag = true;</span>
-<span class="fc" id="L353">            errormessage.append(&quot;car name\n&quot;);</span>
+<span class="fc bfc" id="L349" title="All 2 branches covered.">        if (!carname) {</span>
+<span class="fc" id="L350">            errorflag = true;</span>
+<span class="fc" id="L351">            errormessage.append(&quot;car name\n&quot;);</span>
 // errordetails.add(&quot;Car name&quot;);
         }
-<span class="fc bfc" id="L356" title="All 2 branches covered.">        if (!carimage) {</span>
-<span class="fc" id="L357">            errorflag = true;</span>
-<span class="fc" id="L358">            errormessage.append(&quot;car image\n&quot;);</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">        if (!carimage) {</span>
+<span class="fc" id="L355">            errorflag = true;</span>
+<span class="fc" id="L356">            errormessage.append(&quot;car image\n&quot;);</span>
 // errordetails.add(&quot;Car image&quot;);
         }
 
-<span class="pc bpc" id="L362" title="1 of 2 branches missed.">        if (errorflag == true) {</span>
+<span class="fc bfc" id="L360" title="All 2 branches covered.">        if (errorflag == true) {</span>
 
-<span class="fc" id="L364">            String message = String.valueOf(new ProperCarDetails(errormessage.toString()).getMessage());</span>
+<span class="fc" id="L362">            String message = String.valueOf(new ProperCarDetails(errormessage.toString()).getMessage());</span>
 
-<span class="fc" id="L366">            return new ResponseEntity(message, HttpStatus.CONFLICT);</span>
+<span class="fc" id="L364">            return new ResponseEntity(message, HttpStatus.CONFLICT);</span>
         }
         try {
-<span class="nc" id="L369">            carRepository.existsById(id);</span>
+<span class="fc" id="L367">            carRepository.existsById(id);</span>
 
-<span class="nc" id="L371">            Cars updatecar = carRepository.findById(id).get();</span>
-<span class="nc" id="L372">            updatecar.setCarname(cars.getCarname());</span>
-<span class="nc" id="L373">            updatecar.setCarimage(cars.getCarimage());</span>
-<span class="nc" id="L374">            updatecar.setCarprice(cars.getCarprice());</span>
-<span class="nc" id="L375">            carRepository.save(updatecar);</span>
+<span class="fc" id="L369">            Cars updatecar = carRepository.findById(id).get();</span>
+<span class="fc" id="L370">            updatecar.setCarname(cars.getCarname());</span>
+<span class="fc" id="L371">            updatecar.setCarimage(cars.getCarimage());</span>
+<span class="fc" id="L372">            updatecar.setCarprice(cars.getCarprice());</span>
+<span class="fc" id="L373">            carRepository.save(updatecar);</span>
 
-<span class="nc" id="L377">            return new ResponseEntity&lt;Cars&gt;(updatecar, HttpStatus.OK);</span>
-<span class="nc" id="L378">        } catch (Exception e){</span>
-<span class="nc" id="L379">            return new ResponseEntity(&quot;Some error occurred&quot;, HttpStatus.NOT_FOUND);</span>
+<span class="fc" id="L375">            return new ResponseEntity&lt;Cars&gt;(updatecar, HttpStatus.OK);</span>
+<span class="fc" id="L376">        } catch (Exception e){</span>
+<span class="fc" id="L377">            return new ResponseEntity(&quot;Some error occurred&quot;, HttpStatus.NOT_FOUND);</span>
         }
 
     }
@@ -390,15 +388,15 @@ import java.util.Optional;
     public  ResponseEntity&lt;String&gt;  deleteCar(int id){
 
 
-<span class="pc bpc" id="L393" title="1 of 2 branches missed.">        if( carRepository.existsById(id)){</span>
+<span class="fc bfc" id="L391" title="All 2 branches covered.">        if( carRepository.existsById(id)){</span>
 
-<span class="nc" id="L395">            carRepository.deleteById(id);</span>
-<span class="nc" id="L396">            return new ResponseEntity(&quot;Deleted&quot;,HttpStatus.OK);</span>
+<span class="fc" id="L393">            carRepository.deleteById(id);</span>
+<span class="fc" id="L394">            return new ResponseEntity(&quot;Deleted&quot;,HttpStatus.OK);</span>
         }
         else {
 
 
-<span class="fc" id="L401">            return new ResponseEntity(&quot;Car Not found&quot;, HttpStatus.NOT_FOUND);</span>
+<span class="fc" id="L399">            return new ResponseEntity(&quot;Car Not found&quot;, HttpStatus.NOT_FOUND);</span>
         }
     }
 

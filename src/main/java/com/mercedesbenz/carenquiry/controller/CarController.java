@@ -1,167 +1,4 @@
-//package com.mercedesbenz.carenquiry.controller;
-//
-//import com.mercedesbenz.carenquiry.service.DBCarService;
-//import com.mercedesbenz.carenquiry.model.Cars;
-//import com.mercedesbenz.carenquiry.repository.CarRepository;
-////import io.swagger.annotations.Api;
-//
-//
-//import io.swagger.v3.oas.annotations.Operation;
-//import io.swagger.v3.oas.annotations.responses.ApiResponse;
-//import io.swagger.v3.oas.annotations.tags.Tag;
-//import jakarta.validation.Valid;
-//import io.swagger.v3.oas.annotations.info.Contact;
-//
-//import  io.swagger.v3.oas.annotations.OpenAPIDefinition;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Qualifier;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.lang.NonNull;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.List;
-//
-//@RestController
-///**
-// * so our endpoint here is "http://localhost:8085/api/v1/cars"
-// */
-//@RequestMapping("/api/v1/cars")
-//@Tag(name = "Car Enquiry")
-//@CrossOrigin("http://localhost:3000")
-//
-//public class CarController {
-//    /**
-//     * This CarController has every REST API mappings
-//     */
-//    private  final DBCarService DBCarService;
-//
-//    @Autowired
-//    private CarRepository carRepository;
-//
-//
-//    public CarController(DBCarService DBCarService) {
-//        this.DBCarService = DBCarService;
-//    }
-//
-//    /**
-//     *
-//     * @param cars
-//     * @return to create a post method we are using a endpoint known as "createcar"
-//     */
-//    @Operation(
-//            description ="To create a car information please give carname ,carimage and carprice",
-//            summary = "This is a endpoint to create a car info",
-//            responses = {
-//                    @ApiResponse(
-//                            description = "Car Details Added Successfully",
-//                            responseCode = "201"
-//
-//                    )
-//            }
-//
-//    )
-//    @PostMapping("/createcar")
-//    public  ResponseEntity<Cars>Createcar( @Valid @NonNull @RequestBody Cars cars) {
-//
-//        ResponseEntity<Cars> response = DBCarService.Createcar(cars);
-//        return response;
-//    }
-//
-//    /**
-//     *
-//     * @param id
-//     * @return to get the unique car detail by id
-//     */
-//    @Operation(
-//            description ="To get a particular car information by id",
-//            summary = "This is a endpoint to get a particular car info by id",
-//            responses = {
-//                    @ApiResponse(
-//                            description = "Car Detail of a particular id is fetched successfully",
-//                            responseCode = "200"
-//
-//                    )
-//            }
-//
-//    )
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Cars> findbyId(
-//            @PathVariable("id") int id) {
-//        return DBCarService.FindbyId(id);
-//    }
-//
-//    /**
-//     *
-//     * @param id
-//     * @return to update the car details using the id as a param
-//     */
-//    @Operation(
-//            description ="To Update a car info like carname ,carimage and carprice",
-//            summary = "This is a endpoint to update a  car info by id",
-//            responses = {
-//                    @ApiResponse(
-//                            description = "Car Detail of a particular id is updated successfully",
-//                            responseCode = "200"
-//
-//                    )
-//            }
-//
-//    )
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Cars> updateCarById(
-//            @PathVariable("id") int id, @RequestBody Cars cars) {
-//        return DBCarService.UpdateCar(cars,id);
-//    }
-//
-//    /**
-//     *
-//     *  to get the details of the all cars
-//     */
-//    @Operation(
-//            description ="To get all cars information",
-//            summary = "This is a endpoint to get all cars info",
-//            responses = {
-//                    @ApiResponse(
-//                            description = "Car Detail of all id is fetched successfully",
-//                            responseCode = "200"
-//
-//                    )
-//            }
-//
-//    )
-//    @GetMapping
-//    public ResponseEntity<List<Cars>> findAllCars() {
-//        return DBCarService.GetAllCars();
-//    }
-//
-//    /**
-//     *
-//     * @param id
-//     * @return to delete a particular car by its id as param
-//     */
-//
-//    @Operation(
-//            description ="To delete  a particular car information by id",
-//            summary = "This is a endpoint to delete a particular car info by id",
-//            responses = {
-//                    @ApiResponse(
-//                            description = "Car Detail of a particular id is deleted successfully",
-//                            responseCode = "200"
-//
-//                    )
-//            }
-//
-//    )
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<String>  deleteCar( @PathVariable ("id") int id){
-//        ResponseEntity<String> response = DBCarService.deleteCar(id);
-//        return response;
-//    }}
-//
-//
-//
+
 
 
 package com.mercedesbenz.carenquiry.controller;
@@ -173,24 +10,23 @@ import com.mercedesbenz.carenquiry.service.DBCarService;
 import com.mercedesbenz.carenquiry.model.Cars;
 import com.mercedesbenz.carenquiry.repository.CarRepository;
 //import io.swagger.annotations.Api;
+import com.microsoft.azure.functions.HttpRequestMessage;
 
+import com.microsoft.azure.functions.annotation.*;
+import com.microsoft.azure.functions.*;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import io.swagger.v3.oas.annotations.info.Contact;
-
-import  io.swagger.v3.oas.annotations.OpenAPIDefinition;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 /**
  * This CarController has every REST API mappings
  */
@@ -236,7 +72,7 @@ public class CarController {
     /**
      * Creates a new car in the database.
      *
-     * @param cars the car object to create
+//     * @param  context
 
      * @return a ResponseEntity containing the created car and a status code indicating success or failure
      *
@@ -270,16 +106,32 @@ public class CarController {
 
     )
     @PostMapping("/createcar")
-    public  ResponseEntity<Cars>Createcar( @Valid @NonNull @RequestBody Cars cars) {
+    public  ResponseEntity<Cars>Createcar( @NonNull @RequestBody Cars cars) {
 
         ResponseEntity<Cars> response = DBCarService.Createcar(cars);
         return response;
     }
+    //AZURE FUNCTION
+//    @FunctionName("CreateCarFunction")
+//    public HttpResponseMessage tocreatecar(
+//            @HttpTrigger(name = "req", methods = { HttpMethod.POST }, route = "createcar") HttpRequestMessage<Optional<String>> request,
+//            final ExecutionContext context) {
+//
+//
+//        Optional<String> cars=request.getBody();
+//        ResponseEntity<Cars> response=DBCarService.Createcar(cars);
+////        ResponseEntity<Cars> response = DBCarService.Createcar(cars);
+//
+//        // Create an HTTP response based on the ResponseEntity
+//        return request.createResponseBuilder(HttpStatus.CREATED)
+//                .body(response.getBody())
+//                .build();
+//    }
 
     /**
      * Retrieves a car by its ID.
      *
-     * @param id the ID of the car to retrieve
+//     * @param id the ID of the car to retrieve
      * @return a ResponseEntity containing the car and a status code indicating success or failure
      *
      * <p>
@@ -318,6 +170,21 @@ public class CarController {
 
         return DBCarService.FindbyId(id);
     }
+
+    //AZURE FUNCTIONS
+//    @FunctionName("FindAllCarsFunction")
+//    public HttpResponseMessage getbycarid(
+//            @HttpTrigger(name = "req", methods = { HttpMethod.GET }, route = "cars") HttpRequestMessage<Optional<String>> request,
+//            final ExecutionContext context) {
+//
+//        // Call the DBCarService.GetAllCars method
+//        ResponseEntity<List<Cars>> response = DBCarService.GetAllCars();
+//
+//        // Create an HTTP response based on the ResponseEntity
+//        return request.createResponseBuilder(HttpStatus.OK)
+//                .body(response.getBody())
+//                .build();
+//    }
 
     /**
      * Updates an existing car in the database.
@@ -359,6 +226,25 @@ public class CarController {
             @PathVariable("id") int id, @RequestBody Cars cars) {
         return DBCarService.UpdateCar(cars,id);
     }
+    //AZURE FUNCTIONS
+//    @FunctionName("UpdateCarByIdFunction")
+//    public HttpResponseMessage updatecar(
+//            @HttpTrigger(name = "req", methods = { HttpMethod.PUT }, route = "cars/{id}") HttpRequestMessage<Cars> request,
+//            @BindingName("id") int id,
+//            final ExecutionContext context) {
+//
+//        // Retrieve the Cars object from the request body
+//        Cars cars = request.getBody();
+//
+//        // Call the DBCarService.UpdateCar method
+//        ResponseEntity<Cars> response = DBCarService.UpdateCar(cars, id);
+//
+//        // Create an HTTP response based on the ResponseEntity
+//        return request.createResponseBuilder(HttpStatus.OK)
+//                .body(response.getBody())
+//                .build();
+//    }
+
     /**
      * Retrieves a list of all cars from the database.
      *
@@ -396,6 +282,21 @@ public class CarController {
     public ResponseEntity<List<Cars>> findAllCars() {
         return DBCarService.GetAllCars();
     }
+
+//    //AZURE FUNCTIONS
+//    @FunctionName("FindAllCarsFunction")
+//    public HttpResponseMessage getallcar(
+//            @HttpTrigger(name = "req", methods = { HttpMethod.GET }, route = "cars") HttpRequestMessage<Optional<String>> request,
+//            final ExecutionContext context) {
+//
+//        // Call the DBCarService.GetAllCars method
+//        ResponseEntity<List<Cars>> response = DBCarService.GetAllCars();
+//
+//        // Create an HTTP response based on the ResponseEntity
+//        return request.createResponseBuilder(HttpStatus.OK)
+//                .body(response.getBody())
+//                .build();
+//    }
 
     /**
      * Deletes a car from the database by its ID.
@@ -436,6 +337,26 @@ public class CarController {
         ResponseEntity<String> response = DBCarService.deleteCar(id);
         return response;
     }
+
+    //AZURE FUNCTIONS
+//    @FunctionName("DeleteCarFunction")
+//    public HttpResponseMessage deletecar(
+//            @HttpTrigger(name = "req", methods = { HttpMethod.DELETE }, route = "cars/{id}") HttpRequestMessage<Optional<String>> request,
+//            @BindingName("id") int id,
+//            final ExecutionContext context) {
+//
+//        // Call the DBCarService.deleteCar method
+//        ResponseEntity<String> response = DBCarService.deleteCar(id);
+//
+//        // Create an HTTP response based on the ResponseEntity
+//        return request.createResponseBuilder(HttpStatus.OK)
+//                .body(response.getBody())
+//                .build();
+//    }
+
+
+
+
 }
 
 

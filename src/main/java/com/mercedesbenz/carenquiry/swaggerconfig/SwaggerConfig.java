@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
                 ),
                 @Server(
                         description = "PROD ENV",
-                        url = "http://localhost:8085"
+                        url = "https://carenquiry-app.azurewebsites.net"
                 )
 
         }

@@ -197,10 +197,8 @@ import com.mercedesbenz.carenquiry.util.CheckCarImage;
 import com.mercedesbenz.carenquiry.util.CheckCarName;
 import com.mercedesbenz.carenquiry.util.CheckCarPrice;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -295,7 +293,7 @@ public class DBCarService {
         if (carRepository.existsById(id)) {
             Cars car = carRepository.findById(id).get();
 
-            return new ResponseEntity<Cars>(car, HttpStatus.FOUND);
+            return new ResponseEntity<Cars>(car, HttpStatus.OK);
         } else {
             return new ResponseEntity ("Id not found in the database", HttpStatus.NOT_FOUND);
 

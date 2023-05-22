@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +67,7 @@ public class CarControllerTest{
 
     ObjectMapper objectMapper= new ObjectMapper();
 
-    @Mock
+    @MockBean
     private CarRepository carRepository;
     @InjectMocks
     private CheckCarPrice checkCarPrice;
@@ -122,28 +123,23 @@ public class CarControllerTest{
 //        Mockito.verify(mockApplication, Mockito.times(1)).run(CarenquiryApplication.class, args);
 //    }
 
-//    @Test
-//    public void post_success() throws Exception {
-//// Cars cars = Cars.builder().id(2).carimage("dsd").carname("ads").carprice(233223).build();
-//
-//        Mockito.when(carRepository.save(cars1)).thenReturn(cars1);
-//        Mockito.when(dbCarService.Createcar(cars1)).thenReturn(new ResponseEntity(cars1,HttpStatus.CREATED));
-//// assertEquals("Mustang GT",carController.Createcar(cars1).getBody().getCarname());
-//
-//
-//        String jsonbody = objectMapper.writeValueAsString(cars1);
-//
-// this.mockMvc.perform(post("/api/v1/cars/createcar")
-// .content(jsonbody)
-// .contentType(MediaType.APPLICATION_JSON)
-//         )
-// .andExpect(status().isCreated())
-//// .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Superman"))
-// .andDo(print());
-//    }
-
-
     @Test
+    public void post_success() throws Exception {
+        Cars carstest = new Cars(9, "tata", "tata.jpg", 9000);
+        Mockito.when(carRepository.save(carstest)).thenReturn(carstest);
+
+        String jsonbody = objectMapper.writeValueAsString(carstest);
+
+        this.mockMvc.perform(post("/api/v1/cars/createcar")
+                        .content(jsonbody)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+
+
+        @Test
     public void post_fail_exception_CARPRICE() throws Exception {
 // Cars cars = Cars.builder().id(2).carimage("dsd").carname("ads").carprice(233223).build();
         Cars cars5=new Cars("duster","random.jpg",90);
@@ -231,40 +227,40 @@ public class CarControllerTest{
         Cars c = new Cars(2, "Thar", "http://google", 21313);
         Mockito.when(carRepository.existsById(id)).thenReturn(true);
         Mockito.when(carRepository.findById(id)).thenReturn(Optional.of(c));
-        Mockito.when(carController.findbyId(id)).thenReturn(new ResponseEntity(c,HttpStatus.FOUND));
+        Mockito.when(carController.findbyId(id)).thenReturn(new ResponseEntity(c,HttpStatus.OK));
 
 // explicitly return a non-null ResponseEntity object
-        Mockito.when(dbCarService.FindbyId(id)).thenReturn(new ResponseEntity(c,HttpStatus.FOUND));
+        Mockito.when(dbCarService.FindbyId(id)).thenReturn(new ResponseEntity(c,HttpStatus.OK));
 
-//        ResponseEntity<Cars> responseEntity = dbCarService.FindbyId(id);
-//
-//        assertEquals(HttpStatus.FOUND, responseEntity.getStatusCode());
-//        assertEquals(c, responseEntity.getBody());
-//        this.mockMvc.perform(
-//                        get("/api/v1/cars/{id}",id))
-//                .andExpect(status().isFound())
-//                .andDo(print());
+        ResponseEntity<Cars> responseEntity = dbCarService.FindbyId(id);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(c, responseEntity.getBody());
+        this.mockMvc.perform(
+                        get("/api/v1/cars/{id}",id))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 
-//    @Test
-//    public void findbyId_fail() throws Exception {
-//        int id = 2;
-//        Cars c = new Cars(2, "Thar", "http://google", 21313);
-//        Mockito.when(carRepository.findById(id)).thenReturn(Optional.of(c));
-//        Mockito.when(carController.findbyId(id)).thenReturn(new ResponseEntity("Id not found in the database",HttpStatus.NOT_FOUND));
-//
-//// explicitly return a non-null ResponseEntity object
-//        Mockito.when(dbCarService.FindbyId(id)).thenReturn(new ResponseEntity(c,HttpStatus.NOT_FOUND));
-//
-//        ResponseEntity<Cars> responseEntity = dbCarService.FindbyId(id);
-//
-//        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-//        assertEquals(c, responseEntity.getBody());
-//        this.mockMvc.perform(
-//                        get("/api/v1/cars/{id}",id))
-//                .andExpect(status().isNotFound())
-//                .andDo(print());
-//    }
+    @Test
+    public void findbyId_fail() throws Exception {
+        int id = 9;
+        Cars c = new Cars(2, "Thar", "http://google", 21313);
+        Mockito.when(carRepository.findById(id)).thenReturn(Optional.of(c));
+        Mockito.when(carController.findbyId(id)).thenReturn(new ResponseEntity("Id not found in the database",HttpStatus.NOT_FOUND));
+
+// explicitly return a non-null ResponseEntity object
+        Mockito.when(dbCarService.FindbyId(id)).thenReturn(new ResponseEntity(c,HttpStatus.NOT_FOUND));
+
+        ResponseEntity<Cars> responseEntity = dbCarService.FindbyId(id);
+
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+        assertEquals(c, responseEntity.getBody());
+        this.mockMvc.perform(
+                        get("/api/v1/cars/{id}",id))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
 
 
     @Test
@@ -297,26 +293,41 @@ public class CarControllerTest{
         assertEquals(new ResponseEntity<>(updatedCar,HttpStatus.OK),dbCarService.UpdateCar(updatedCar,id));
         String jsonbody = objectMapper.writeValueAsString(updatedCar);
 
-//        this.mockMvc.perform(
-//                        put("/api/v1/cars/{id}",id,updatedCar).content(jsonbody).contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andDo(print());
-    }
-
-    @Test
-    public void updateCarById_failure() throws Exception{
-        int id = 22;
-        Cars originalCar = new Cars("Mazda","https://image.com/Mazda",150000);
-
-         Mockito.when(carRepository.existsById(id)).thenReturn(false);
-         Mockito.when(carController.updateCarById(id,originalCar)).thenReturn(new ResponseEntity("Some error occurred", HttpStatus.NOT_FOUND));
-         Mockito.when(dbCarService.UpdateCar(originalCar,id)).thenReturn(new ResponseEntity("Some error occurred", HttpStatus.NOT_FOUND));
-
         this.mockMvc.perform(
-                        put("/api/v1/cars/{id}",id,originalCar))
-//                .andExpect(status().isNotFound())
+                        put("/api/v1/cars/{id}",id,updatedCar).content(jsonbody).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
+
+//    @Test
+//    public void updateCarById_failure() throws Exception{
+//        int id = 22;
+//        Cars originalCar = new Cars("Mazda","https://image.com/Mazda",150000);
+//
+//         Mockito.when(carRepository.existsById(id)).thenReturn(false);
+//         Mockito.when(carController.updateCarById(id,originalCar)).thenReturn(new ResponseEntity("Some error occurred", HttpStatus.NOT_FOUND));
+//         Mockito.when(dbCarService.UpdateCar(originalCar,id)).thenReturn(new ResponseEntity("Some error occurred", HttpStatus.NOT_FOUND));
+//
+//        this.mockMvc.perform(
+//                        put("/api/v1/cars/{id}",id,originalCar))
+//                .andExpect(status().isNotFound())
+//                .andDo(print());
+//    }
+@Test
+public void updateCarById_failure() throws Exception {
+    int id = 22;
+    Cars originalCar = new Cars("Mazda", "https://image.com/Mazda", 150000);
+
+    Mockito.when(carRepository.existsById(id)).thenReturn(false);
+    Mockito.when(dbCarService.UpdateCar(originalCar, id)).thenReturn(new ResponseEntity("Some error occurred", HttpStatus.NOT_FOUND));
+
+    this.mockMvc.perform(
+                    put("/api/v1/cars/{id}", id)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(originalCar)))
+            .andExpect(status().isNotFound())
+            .andDo(print());
+}
 
 
     @Test
@@ -414,18 +425,18 @@ public class CarControllerTest{
 
 
 
-//    @Test
-//    public void delete_success() throws Exception {
-//        int id = 2;
-//
-//        doNothing().when(carRepository).deleteById(id);
-//        when(carRepository.existsById(id)).thenReturn(true);
-//        when(dbCarService.deleteCar(id)).thenReturn(new ResponseEntity<>("Deleted", HttpStatus.OK));
-//
-//        this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/cars/{id}", id))
-//                .andExpect(status().isOk())
-//                .andDo(print());
-//    }
+    @Test
+    public void delete_success() throws Exception {
+        int id = 2;
+
+        doNothing().when(carRepository).deleteById(id);
+        when(carRepository.existsById(id)).thenReturn(true);
+        when(dbCarService.deleteCar(id)).thenReturn(new ResponseEntity<>("Deleted", HttpStatus.OK));
+
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/cars/{id}", id))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 
 
     @Test
