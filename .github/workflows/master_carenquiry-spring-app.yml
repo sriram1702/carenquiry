@@ -48,4 +48,4 @@ jobs:
           app-name: 'carenquiry-spring-app'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0A4731496DBC4628B1E3D0A0EC80BFA4 }}
-          package: '*.jar'
+          package: 'car-enquiry-0.0.1-SNAPSHOT.jar'
