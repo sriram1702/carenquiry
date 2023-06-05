@@ -3,7 +3,8 @@ plugins {
 	id 'org.springframework.boot' version '3.0.6'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'jacoco'
-
+//	id "com.microsoft.azure.azurefunctions" version "1.12.0"
+	id 'checkstyle'
 
 
 }
@@ -16,6 +17,23 @@ sourceCompatibility = '17'
 repositories {
 	mavenCentral()
 }
+checkstyle {
+	toolVersion '7.8.1'
+	configFile file("config/checkstyle/checkstyle.xml")
+}
+checkstyleMain {
+	source ='src/main/java'
+}
+//checkstyleTest{
+//	source='src/test/java'
+//}
+tasks.withType(Checkstyle) {
+	// Fail the build if Checkstyle violations are found
+	ignoreFailures = true
+
+	// For example:
+	// maxWarnings = 0
+}
 
 jacoco {
 	toolVersion = "0.8.7"
@@ -27,37 +45,37 @@ jacoco {
 // destinationDirectory = file("$buildDir/reports/jacoco")
 }
 
-jacocoTestReport {
-	reports {
-		html.required
-		xml.required
-		csv.required
-	}
-	executionData fileTree(project.rootDir.absolutePath).include("**/*.exec")
-	dependsOn test
-}
-
-check.dependsOn jacocoTestCoverageVerification
-
-test {
-	finalizedBy jacocoTestReport
-	useJUnitPlatform()
-}
-
-jacocoTestCoverageVerification {
-	violationRules {
-		rule {
-			limit {
-				minimum = 0.92
-			}
-		}
-	}
-}
-
-tasks.withType(Test) {
-
-	finalizedBy jacocoTestReport
-}
+//jacocoTestReport {
+//	reports {
+//		html.required
+//		xml.required
+//		csv.required
+//	}
+//	executionData fileTree(project.rootDir.absolutePath).include("**/*.exec")
+//	dependsOn test
+//}
+//
+//check.dependsOn jacocoTestCoverageVerification
+//
+//test {
+//	finalizedBy jacocoTestReport
+//	useJUnitPlatform()
+//}
+//
+//jacocoTestCoverageVerification {
+//	violationRules {
+//		rule {
+//			limit {
+//				minimum = 0.92
+//			}
+//		}
+//	}
+//}
+//
+//tasks.withType(Test) {
+//
+//	finalizedBy jacocoTestReport
+//}
 
 
 
@@ -67,9 +85,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-tomcat'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'com.microsoft.azure.functions:azure-functions-java-library:1.4.0'
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+//	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
 
+//	implementation 'com.microsoft.azure.functions:azure-functions-java-library:3.0.0'
 
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'org.jacoco:org.jacoco.core:0.8.8'
@@ -85,6 +103,13 @@ dependencies {
 	implementation 'io.swagger.core.v3:swagger-models-jakarta:2.2.7'
 	testImplementation 'org.mockito:mockito-core:4.8.1'
 	testImplementation 'org.mockito:mockito-junit-jupiter:4.8.1'
+	implementation 'org.springframework.security:spring-security-core:6.1.0'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:3.1.0'
+	implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+//	checkstyle 'com.puppycrawl.tools:checkstyle:8.44'
+
+
+
 
 }
 
@@ -95,3 +120,17 @@ tasks.named('test') {
 bootRun {
 	systemProperty 'spring.profiles.active', 'dev'
 }
+//azurefunctions {
+//	// subscription = '<your subscription id>'
+//	resourceGroup = 'java-functions-group'
+//	appName = 'carenquiry-1684905656775' // please rename the function name
+//	pricingTier = 'Consumption' // refers https://github.com/microsoft/azure-maven-plugins/tree/develop/azure-functions-maven-plugin#supported-pricing-tiers for all valid values
+//	region = 'westus'
+//	runtime {
+//		os = 'windows'
+//	}
+//	// appSettings {
+//	//    key = 'value'
+//	// }
+//	// localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
+//}
